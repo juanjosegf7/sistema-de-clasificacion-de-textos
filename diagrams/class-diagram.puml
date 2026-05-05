@@ -1,0 +1,140 @@
+@startuml
+title Library Exchange System - Class Diagram
+
+class User {
+  - userId: int
+  - firstName: String
+  - lastName: String
+  - documentNumber: String
+  - age: int
+  - gender: String
+  - populationGroup: String
+  - address: String
+  - phone: String
+  - email: String
+  - registrationDate: Date
+  + registerUser(): void
+  + updateInformation(): void
+  + offerMaterial(material: ReadingMaterial): void
+  + requestLoan(material: ReadingMaterial): Loan
+  + returnMaterial(loan: Loan): void
+  + viewLoanHistory(): List<Loan>
+}
+
+class Interest {
+  - interestId: int
+  - name: String
+  - description: String
+  + createInterest(): void
+  + updateInterest(): void
+}
+
+class ReadingMaterial {
+  - materialId: int
+  - title: String
+  - author: String
+  - country: String
+  - writingYear: int
+  - edition: String
+  - publicationYear: int
+  - isbn: String
+  - format: String
+  - origin: String
+  - condition: String
+  - available: boolean
+  + registerMaterial(): void
+  + updateMaterial(): void
+  + classifyMaterial(): void
+  + changeAvailability(available: boolean): void
+  + getMaterialInfo(): String
+}
+
+class LiteratureBook {
+  - literaryGenre: String
+  + classifyGenre(): void
+}
+
+class ScientificBook {
+  - subject: String
+  + classifySubject(): void
+}
+
+class Magazine {
+  - issueNumber: String
+  - periodicity: String
+  + getIssueInfo(): String
+}
+
+class Comic {
+  - publisher: String
+  - mainCharacter: String
+  + getCharacterInfo(): String
+}
+
+class ResearchArticle {
+  - researchArea: String
+  - journalName: String
+  + getResearchArea(): String
+}
+
+class ExchangeCenter {
+  - centerId: int
+  - name: String
+  - address: String
+  - municipality: String
+  - department: String
+  + registerCenter(): void
+  + updateCenter(): void
+  + listAvailableMaterials(): List<ReadingMaterial>
+}
+
+class Loan {
+  - loanId: int
+  - loanDate: Date
+  - expectedReturnDate: Date
+  - actualReturnDate: Date
+  - loanStatus: String
+  + createLoan(): void
+  + closeLoan(): void
+  + checkStatus(): String
+  + calculateDelayDays(): int
+}
+
+class Exchange {
+  - exchangeId: int
+  - exchangeDate: Date
+  - exchangeStatus: String
+  + createExchange(): void
+  + confirmExchange(): void
+  + cancelExchange(): void
+}
+
+class ReadingStatistic {
+  - statisticId: int
+  - weekCount: int
+  - monthCount: int
+  - yearCount: int
+  - preferredMaterialType: String
+  + updateStatistic(): void
+  + calculateWeeklyReading(): int
+  + calculateMonthlyReading(): int
+  + calculateYearlyReading(): int
+}
+
+User "1" -- "0..*" ReadingMaterial : owns
+User "1" -- "0..*" Loan : requests
+User "1" -- "0..*" Exchange : participates
+User "1" -- "0..*" ReadingStatistic : has
+User "0..*" -- "0..*" Interest : has
+
+ReadingMaterial "1" -- "0..*" Loan : is loaned in
+ReadingMaterial "1" -- "0..*" Exchange : is exchanged in
+ExchangeCenter "1" -- "0..*" ReadingMaterial : stores
+
+ReadingMaterial <|-- LiteratureBook
+ReadingMaterial <|-- ScientificBook
+ReadingMaterial <|-- Magazine
+ReadingMaterial <|-- Comic
+ReadingMaterial <|-- ResearchArticle
+
+@enduml
