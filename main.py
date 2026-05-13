@@ -24,7 +24,7 @@ def main():
         documentNumber="1002456789",
         age=26,
         gender="Masculino",
-        populationGroup="Joven",
+        populationGroup="Adulto",
         address="Calle 10 # 20-30",
         phone="3001234567",
         email="jjgf@yopmail.com",
