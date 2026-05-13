@@ -1,12 +1,15 @@
 # Sistema de Clasificación de Textos
 
-Este repositorio contiene el diseño del diagrama de clases para un sistema de gestión, clasificación e intercambio de material bibliográfico, desarrollado como parte del caso práctico de la Unidad 1.
+Proyecto desarrollado en Python para implementar la fase 2 del caso práctico, tomando como base el diagrama de clases UML del sistema de clasificación e intercambio de textos.
 
-## Descripción
+## Conceptos aplicados
 
-La idea del sistema es organizar diferentes tipos de textos como libros, revistas, cómics y artículos de investigación, además de gestionar usuarios, préstamos, intercambios y estadísticas de lectura.
-
-Se modelaron las principales entidades del problema utilizando Programación Orientada a Objetos, definiendo sus atributos, métodos y relaciones.
+- Clases
+- Objetos
+- Encapsulamiento
+- Herencia
+- Polimorfismo
+- Relaciones entre clases
 
 ## Diagrama de Clases
 
@@ -30,4 +33,4 @@ El diagrama representa la estructura del sistema a nivel lógico, incluyendo cla
 
 ## Autor
 
-Trabajo académico - Unidad 1
+Trabajo académico - Unidad 2
