@@ -29,7 +29,7 @@ class Interest {
   + updateInterest(): void
 }
 
-class ReadingMaterial {
+abstract class ReadingMaterial {
   - materialId: int
   - title: String
   - author: String
@@ -44,36 +44,53 @@ class ReadingMaterial {
   - available: boolean
   + registerMaterial(): void
   + updateMaterial(): void
-  + classifyMaterial(): void
   + changeAvailability(available: boolean): void
   + getMaterialInfo(): String
+  + getMaterialType(): String
+  + classifyMaterial(): String
+  + showDetails(): String
 }
 
 class LiteratureBook {
   - literaryGenre: String
+  + getMaterialType(): String
+  + classifyMaterial(): String
+  + showDetails(): String
   + classifyGenre(): void
 }
 
 class ScientificBook {
   - subject: String
+  + getMaterialType(): String
+  + classifyMaterial(): String
+  + showDetails(): String
   + classifySubject(): void
 }
 
 class Magazine {
   - issueNumber: String
   - periodicity: String
+  + getMaterialType(): String
+  + classifyMaterial(): String
+  + showDetails(): String
   + getIssueInfo(): String
 }
 
 class Comic {
   - publisher: String
   - mainCharacter: String
+  + getMaterialType(): String
+  + classifyMaterial(): String
+  + showDetails(): String
   + getCharacterInfo(): String
 }
 
 class ResearchArticle {
   - researchArea: String
   - journalName: String
+  + getMaterialType(): String
+  + classifyMaterial(): String
+  + showDetails(): String
   + getResearchArea(): String
 }
 

@@ -14,6 +14,19 @@ from models.materialTypes import (
 )
 
 
+def showPolymorphismDemo(readingMaterials):
+    print("\n*** DEMOSTRACIÓN DE ABSTRACCIÓN Y POLIMORFISMO ***\n")
+
+    print("Todos los materiales se recorren usando la misma estructura.")
+    print("Sin embargo, cada clase hija responde diferente al mismo método.\n")
+
+    for material in readingMaterials:
+        print(f"Tipo: {material.getMaterialType()}")
+        print(material.classifyMaterial())
+        print(material.showDetails())
+        print("-" * 100)
+
+
 def main():
     print("*** SISTEMA DE CLASIFICACIÓN E INTERCAMBIO DE TEXTOS ***\n")
 
@@ -49,6 +62,19 @@ def main():
     print(userTwo.registerUser())
     print()
 
+    center = ExchangeCenter(
+        centerId=1,
+        name="Centro Cultural Armenia",
+        address="Av. Bolívar # 12-50",
+        municipality="Armenia",
+        department="Quindío",
+    )
+
+    print("*** CENTRO DE INTERCAMBIO ***")
+    print(center.registerCenter())
+    print(center.getCenterInfo())
+    print()
+
     literatureBook = LiteratureBook(
         literaryGenre="Novela",
         materialId=1,
@@ -59,10 +85,9 @@ def main():
         edition="Primera edición",
         publicationYear=1967,
         isbn="978-0307474728",
-        format="Impreso",
-        origin="Donación",
-        condition="Bueno",
-        available=True,
+        formatType="Impreso",
+        owner=userOne,
+        exchangeCenter=center,
     )
 
     scientificBook = ScientificBook(
@@ -75,10 +100,9 @@ def main():
         edition="Séptima edición",
         publicationYear=2001,
         isbn="978-9500604477",
-        format="Impreso",
-        origin="Biblioteca pública",
-        condition="Excelente",
-        available=True,
+        formatType="Impreso",
+        owner=userTwo,
+        exchangeCenter=center,
     )
 
     comic = Comic(
@@ -92,10 +116,9 @@ def main():
         edition="Edición especial",
         publicationYear=1963,
         isbn="978-0785112569",
-        format="Digital",
-        origin="Colección privada",
-        condition="Bueno",
-        available=True,
+        formatType="Digital",
+        owner=userTwo,
+        exchangeCenter=center,
     )
 
     magazine = Magazine(
@@ -109,10 +132,9 @@ def main():
         edition="Edición mensual",
         publicationYear=2024,
         isbn="ISSN-0327-1218",
-        format="Impreso",
-        origin="Centro cultural",
-        condition="Nuevo",
-        available=True,
+        formatType="Impreso",
+        owner=userOne,
+        exchangeCenter=center,
     )
 
     researchArticle = ResearchArticle(
@@ -126,28 +148,27 @@ def main():
         edition="Volumen 12",
         publicationYear=2023,
         isbn="ART-2023-001",
-        format="Digital",
-        origin="Universidad",
-        condition="Nuevo",
-        available=True,
+        formatType="Digital",
+        owner=userOne,
+        exchangeCenter=center,
     )
 
-    print(literatureBook.registerMaterial())
-    print(scientificBook.registerMaterial())
-    print(comic.registerMaterial())
-    print(magazine.registerMaterial())
-    print(researchArticle.registerMaterial())
+    readingMaterials = [
+        literatureBook,
+        scientificBook,
+        comic,
+        magazine,
+        researchArticle,
+    ]
+
+    print("*** REGISTRO DE MATERIALES ***")
+    for material in readingMaterials:
+        print(center.addMaterial(material))
     print()
 
-    print("*** PRUEBA DE HERENCIA Y POLIMORFISMO ***")
-    materials = [literatureBook, scientificBook, comic, magazine, researchArticle]
+    showPolymorphismDemo(readingMaterials)
 
-    for material in materials:
-        print(material.getMaterialInfo())
-        print(material.classifyMaterial())
-        print()
-
-    print("*** MÉTODOS ESPECÍFICOS DE CADA SUBCLASE ***")
+    print("\n*** MÉTODOS ESPECÍFICOS DE CADA SUBCLASE ***")
     print(literatureBook.classifyGenre())
     print(scientificBook.classifySubject())
     print(comic.getCharacterInfo())
@@ -155,24 +176,9 @@ def main():
     print(researchArticle.getResearchArea())
     print()
 
-    print("*** CENTRO DE INTERCAMBIO ***")
-    center = ExchangeCenter(
-        centerId=1,
-        name="Centro Cultural Armenia",
-        address="Av. Bolívar # 12-50",
-        municipality="Armenia",
-        department="Quindío",
-    )
-
-    print(center.registerCenter())
-    print(center.getCenterInfo())
-    print(center.addMaterial(literatureBook))
-    print(center.addMaterial(scientificBook))
-    print(center.addMaterial(comic))
-    print(center.addMaterial(magazine))
-    print(center.addMaterial(researchArticle))
-    print()
+    print("*** MATERIALES DISPONIBLES EN EL CENTRO ***")
     print(center.listAvailableMaterials())
+    print()
 
     print("*** USUARIO OFRECE MATERIAL ***")
     print(userOne.offerMaterial(literatureBook))
@@ -181,11 +187,15 @@ def main():
 
     print("*** INTERESES DEL USUARIO ***")
     interestOne = Interest(
-        interestId=1, name="Literatura", description="Interés por novelas y cuentos"
+        interestId=1,
+        name="Literatura",
+        description="Interés por novelas y cuentos",
     )
 
     interestTwo = Interest(
-        interestId=2, name="Cómics", description="Interés por historias gráficas"
+        interestId=2,
+        name="Cómics",
+        description="Interés por historias gráficas",
     )
 
     print(interestOne.createInterest())
@@ -197,17 +207,24 @@ def main():
     print("*** PRÉSTAMO DE MATERIAL ***")
     loan, message = userOne.requestLoan(comic)
     print(message)
-    print(loan.getLoanInfo())
+
+    if loan:
+        print(loan.getLoanInfo())
+
     print()
     print(center.listAvailableMaterials())
+    print()
 
     print("*** DEVOLUCIÓN DE MATERIAL ***")
-    print(userOne.returnMaterial(loan))
-    print(loan.getLoanInfo())
+    if loan:
+        print(userOne.returnMaterial(loan))
+        print(loan.getLoanInfo())
+
     print()
 
     print("*** HISTORIAL DE PRÉSTAMOS ***")
     print(userOne.viewLoanHistory())
+    print()
 
     print("*** INTERCAMBIO DE MATERIAL ***")
     exchange = Exchange(
