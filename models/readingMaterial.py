@@ -1,18 +1,20 @@
-class ReadingMaterial:
+from abc import ABC, abstractmethod
+
+
+class ReadingMaterial(ABC):
     def __init__(
         self,
-        materialId: int,
-        title: str,
-        author: str,
-        country: str,
-        writingYear: int,
-        edition: str,
-        publicationYear: int,
-        isbn: str,
-        format: str,
-        origin: str,
-        condition: str,
-        available: bool = True,
+        materialId,
+        title,
+        author,
+        country,
+        writingYear,
+        edition,
+        publicationYear,
+        isbn,
+        formatType,
+        owner,
+        exchangeCenter,
     ):
         self.__materialId = materialId
         self.__title = title
@@ -22,49 +24,75 @@ class ReadingMaterial:
         self.__edition = edition
         self.__publicationYear = publicationYear
         self.__isbn = isbn
-        self.__format = format
-        self.__origin = origin
-        self.__condition = condition
+        self.__formatType = formatType
+        self.__owner = owner
+        self.__exchangeCenter = exchangeCenter
+        self.__available = True
+
+    def getMaterialId(self):
+        return self.__materialId
+
+    def getTitle(self):
+        return self.__title
+
+    def getAuthor(self):
+        return self.__author
+
+    def getCountry(self):
+        return self.__country
+
+    def getWritingYear(self):
+        return self.__writingYear
+
+    def getEdition(self):
+        return self.__edition
+
+    def getPublicationYear(self):
+        return self.__publicationYear
+
+    def getIsbn(self):
+        return self.__isbn
+
+    def getFormatType(self):
+        return self.__formatType
+
+    def getOwner(self):
+        return self.__owner
+
+    def getExchangeCenter(self):
+        return self.__exchangeCenter
+
+    def isAvailable(self):
+        return self.__available
+
+    def changeAvailability(self, available):
         self.__available = available
 
-    def registerMaterial(self):
-        return f"Material '{self.__title}' registrado correctamente."
-
-    def updateMaterial(self, title=None, condition=None):
-        if title:
-            self.__title = title
-        if condition:
-            self.__condition = condition
-        return "Material actualizado correctamente."
-
-    def classifyMaterial(self):
-        return "Clasificación: material de lectura general."
-
-    def changeAvailability(self, available: bool):
-        self.__available = available
-        return f"Disponibilidad cambiada a: {self.__available}"
+    def getBasicInfo(self):
+        return f"{self.__title} - {self.__author} ({self.__publicationYear})"
 
     def getMaterialInfo(self):
+        availability = "Disponible" if self.__available else "No disponible"
+
         return (
-            f"ID: {self.__materialId} | "
-            f"Título: {self.__title} | "
-            f"Autor: {self.__author} | "
+            f"{self.__title} - {self.__author} | "
             f"País: {self.__country} | "
             f"Año escritura: {self.__writingYear} | "
             f"Edición: {self.__edition} | "
             f"Año publicación: {self.__publicationYear} | "
             f"ISBN: {self.__isbn} | "
-            f"Formato: {self.__format} | "
-            f"Origen: {self.__origin} | "
-            f"Estado: {self.__condition} | "
-            f"Disponible: {self.__available}"
+            f"Formato: {self.__formatType} | "
+            f"Estado: {availability}"
         )
 
-    def getTitle(self):
-        return self.__title
+    @abstractmethod
+    def getMaterialType(self):
+        pass
 
-    def getIsbn(self):
-        return self.__isbn
+    @abstractmethod
+    def classifyMaterial(self):
+        pass
 
-    def isAvailable(self):
-        return self.__available
+    @abstractmethod
+    def showDetails(self):
+        pass
